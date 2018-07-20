@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+        <title>Sign In</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- userLayoutHead() start -->
+
+
+<link href="/amember/application/default/views/public/css/reset.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/amember/application/default/views/public/css/amember.css" media="screen" rel="stylesheet" type="text/css" >
+<!--[if IE 7]> <link href="/amember/application/default/views/public/css/ie-7.css" media="screen" rel="stylesheet" type="text/css" ><![endif]-->
+<link href="/amember/application/default/themes/pff/public/css/theme.css?v=20161107" media="screen" rel="stylesheet" type="text/css" >
+<link href="/amember/application/default/views/public/js/jquery/jquery.ui.css" media="screen" rel="stylesheet" type="text/css" >
+
+<script type="text/javascript" src="/amember/application/default/views/public/js/jquery/jquery.js"></script>
+<script type="text/javascript">
+    //<!--
+    window.uiDefaultDate = new Date(2018,6,20);
+    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+    window.uiDateFormat = "mm\/dd\/y";
+    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+    window.rootUrl = "\/amember";
+window.CKEDITOR_BASEPATH = "\/amember\/application\/default\/views\/public\/js\/ckeditor\/";
+window.amLangCount = 0;
+    //-->
+</script>
+<script type="text/javascript" src="/amember/application/default/views/public/js/jquery/jquery.ui.js"></script>
+<script type="text/javascript" src="/amember/application/default/themes/pff/public/js/user.js"></script>
+<script type="text/javascript" src="/amember/application/default/views/public/js/upload.js"></script>
+
+<!-- userLayoutHead() finish -->
+            <script type="text/javascript">
+                var onloadCallback = function() {
+                    grecaptcha.render('recaptcha-element', {
+                      'sitekey' : '6LcoKxoTAAAAAP5zPEsyksCgDeWo8Yh-emiivPgw'
+                    });
+                };
+            </script>   </head>
+    <body>
+                        <script>
+        dataLayer = [{
+          'userId': '',
+          'loggedInStatus': 'false',
+          'subscriptionType': '',
+          'internalTraffic': 'No',
+          'pageType': 'login',
+          'section': 'My Account',
+          'contentType': 'page'
+        }];
+      </script>
+
+      <!-- Google Tag Manager -->
+      <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWLLR6"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-MWLLR6');</script>
+      <!-- End Google Tag Manager -->
+
+                <div class="am-layout">
+            <a name="top"></a>
+            <div class="am-header">
+                <div class="am-header-content-wrapper am-main">
+                    <div class="am-header-content">
+                        <a href="https://www.profootballfocus.com"><img class="am-header-content-logo" src="/images/webui/pff-shorthand-white.svg" alt="ProFootballFocus.com" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="am-body">
+                <div class="am-body-content-wrapper am-main">
+                    <div class="am-body-content">
+                                                                        <h1>Sign In</h1>
+        <!-- content starts here -->
+    <div class="am-login-form-wrapper">
+        <div class="am-form am-login-form">
+        <form name="login" method="post" action='/amember/login'>
+            <fieldset>
+                <div class="row">
+                    <div class="element am-prompt">Email or Username</div>
+                    <div id="new-customer" >
+                        <a class="local-link am-form-new-customer" href="/amember/signup">New Customer?</a></div>
+                </div>
+                <div class="row">
+                    <div class="element">
+                        <input type="text" id="login" name="amember_login" size="15" value="" autofocus="autofocus"  placeholder="Email or Username" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="element am-prompt">Password</div>
+                    <div id="forgotten-password">
+                        <a href="javascript:;" class="local-link am-form-login-switch">Forgotten your password?</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="element">
+                        <input type="password" id="pass" name="amember_pass" size="15" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="row" id="recaptcha-row" style="" data-recaptcha-theme="red">
+                    <div class="element am-element-recaptcha" id="recaptcha-element"></div>
+                </div>
+                <div class="row" id="login-row">
+                    <div class="element"><input type="submit" value="Login" /></div>
+                </div>
+            </fieldset>
+            <input type="hidden" id="remember" name="remember_login" value="1"/>
+            <input type="hidden" name="login_attempt_id" value="1532115893" />
+<input type="hidden" name="amember_redirect_url" value="/auth/tokenize?return_url=https://www.profootballfocus.com/data/oauth.php?product=pro_premium" />
+            <div style="text-align: center; border-top: 1px solid #ddd; padding: 10px 0 0 0;">
+                <h3>New to ProFootballFocus?</h3>
+            </div>
+            <div class="row">
+                <div class="element"> 
+                    <div class="am-signup-button"><a href="/amember/signup">Sign Up!</a></div> 
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+<div class="am-sendpass-form-wrapper">
+    <div class="am-form am-sendpass-form">
+        <form name="sendpass" method="post" action="/amember/sendpass">
+            <fieldset>
+                <div class="row">
+                    <div class="element"><input type="text" name="login" id="sendpass" size="15" placeholder="Email or Username" /></div>
+                </div>
+                <div class="row">
+                    <div class="element">
+                        <input type="submit" value="Get Password" />
+                        <a href="javascript:;" class="local-link am-form-login-switch">I have password</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+$('.am-form-login-switch').click(function() {
+    $('.am-login-form-wrapper').toggle();
+    $('.am-sendpass-form-wrapper').toggle();
+
+    if ($('.am-login-form-wrapper').is(':visible'))
+        $('.am-body-content h1:first').text('Sign In');
+    else
+        $('.am-body-content h1:first').text('Forgotten Password');
+    
+    $('.am-login-form-wrapper .errors, .am-sendpass-form-wrapper .errors').remove();
+});
+
+$('.visual-only-customer-type > input').change(function() {
+    $('.am-login-form-wrapper, .am-new-form-wrapper').toggle();
+    $('#returning-visual-only-customer-returning').prop("checked", true);
+    $('#new-visual-only-customer-new').prop("checked", true);
+});
+</script></div>
+<div id="am-flash" class="am-flash">
+    <div class="am-flash-mask"></div>
+    <div class="am-flash-content"></div>
+</div>                </div>
+            </div>
+        </div>
+        <div class="am-footer">
+            <div class="am-footer-content-wrapper am-main">
+                <div class="am-footer-content">
+                    <div class="am-footer-actions">
+                        <a href="/">Home</a><span class="bar">|</span>
+                        <a href="/news">News &amp; Analysis</a><span class="bar">|</span>
+                        <a href="/fantasy">Fantasy</a><span class="bar">|</span>
+                        <a href="/teams">Teams</a><span class="bar">|</span>
+                        <a href="/tools">Tools &amp; Charts</a><br>
+
+                        <span class="footer-bottom">
+                            <span class="social">
+                                <a href="https://www.facebook.com/ProFootballFocus" target="_blank" class="fb-icon"></a>
+                                <a href="https://twitter.com/pff" target="_blank" class="twitter-icon"></a>
+                            </span><br>
+
+                            <a href="https://pff.desk.com/">FAQs</a>|
+                            <a href="https://pff.desk.com/customer/portal/emails/new">Contact Us</a>|
+                            <a href="/privacy">Privacy Policy</a>|
+                            <a href="/terms">Terms of Use</a></span>
+                        </span>
+                    </div>
+                    <p>&copy; 2018 ProFootballFocus.com All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" id='am-ctcs-v1'>
+    (function(){
+    var url=(("https:" == document.location.protocol) ?
+        "https://www.profootballfocus.com/amember" : "https://www.profootballfocus.com/amember");
+    var d=document, s=d.createElement('script'), src=d.getElementsByTagName('script')[0];
+    var w = window; var lo = w.location; var hr=lo.href; var ho=lo.host;  var se=lo.search;
+    var m = RegExp('[?&]ref=([^&]*)').exec(se);
+    var ref = m && decodeURIComponent(m[1].replace(/\+/g, ' '));s.type='text/javascript';
+    s.async=true; s.src=url+'/aff/click-js/?r='+ref+'&s='+encodeURIComponent(document.referrer);
+    if(ref){src.parentNode.insertBefore(s,src); var uri = hr.toString().split(ho)[1];
+    w.history.replaceState('Object', 'Title', uri.replace(m[0], ""));}})();
+</script>		<script type="text/javascript" src="/amember/application/default/themes/pff/public/js/theme.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer></script>    </body>
+</html>

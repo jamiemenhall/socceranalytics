@@ -1,0 +1,4 @@
+Username:
+<input id="login" name="amember_login" size="15" value="" autofocus="autofocus" placeholder="Email or Username" type="text">
+Password:
+
