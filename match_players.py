@@ -1,26 +1,23 @@
+#python 2
 import csv
 import cPickle as pickle
 
-columns = {}
 players = {}
+
 header_skip = 0 
-with open('data/PBP.csv', 'rb') as f:
+with open('amc_data/PLAYER.csv', 'rb') as f:
     reader = csv.reader(f)
     for row in reader:
-        if header_skip > 2:
-            name = row[3]
-            players[name] = row
+        if header_skip == 1:
+            pid = row[0]
+            fname = row[1]
+            lname = row[2]
+            players[pid] = [fname, lname]
         elif header_skip == 0:
-            columns = dict([(c,i) for i,c in enumerate(row)])
-            header_skip += 1
-        elif header_skip == 1:
-            print (row)
+            print([(c,i) for i,c in enumerate(row)])
             header_skip += 1
 f.close()
 
-print(columns)
-print (len(players))
-
-with open("players_dict.pkl", "wb") as outfile:
-    pickle.dump(players, outfile)
+with open("players.pkl", "wb") as outfile:
+    pickle.dump(games, outfile)
 outfile.close()

@@ -11,7 +11,7 @@ def save_data(urls, outfiles, prefix=None):
     for url, save in zip(urls, outfiles):
         cmd = create_wget_cmd(save, cf, url)
         os.system(cmd)
-        time.sleep(random.randint(60, 300))
+        time.sleep(random.randint(6, 30))
 
 #urls = []
 #outfiles = []

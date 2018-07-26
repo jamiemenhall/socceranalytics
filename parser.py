@@ -161,5 +161,5 @@ def get_cookies_in_cookiejar(host):
 #print (html_to_pd(content.decode("utf-8"), 0))
 
 #FROM FILE
-#f = open("test-html.html", "rb")
+#f = open("~/football/pff_data/weekly_slot_performance/week_17_season_2017_pos_WR_numsnaps_25.html", "rb")
 #print (html_to_pd(f.read().decode("utf-8"), 4))
