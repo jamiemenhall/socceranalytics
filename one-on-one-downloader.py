@@ -2,9 +2,12 @@ import os, time, random
 from parser import html_to_pd
 import requests
 
-cf = "mycookies.txt"
+cf = "~/football/mycookies.txt"
 
 def create_wget_cmd(savefile, cookiefile, url):
+    #cmd =  'phantomjs --cookies-file='+cookiefile+' get.js "' + url + '" > ' + savefile
+    #print(cmd)
+    #return cmd
     return "wget -O " + savefile + " --load-cookies " + cookiefile + " " + url
 
 def save_data(urls, outfiles, prefix=None):
@@ -76,7 +79,7 @@ for year in seasons:
 
 urls = []
 outfiles = []
-stat="v"
+stat="o"
 start_gids = {"2015":3406, "2016":4094, "2017":7922}
 for year in seasons:
     start_gid = start_gids[year]
@@ -84,13 +87,15 @@ for year in seasons:
         for matchup in matchups[(year, week)]:
             winner_id, loser_id = matchup
             for gid in range(start_gid, start_gid + len(matchups[(year, week)])):
-                url1="https://www.profootballfocus.com/data/gstats.php?tab=by_week&season="+year+"&gameid="+str(gid)+"&teamid="+str(winner_id)+"&stats="+stat
-                url2="https://www.profootballfocus.com/data/gstats.php?tab=by_week&season="+year+"&gameid="+str(gid)+"&teamid="+str(loser_id)+"&stats="+stat
+                url1="https://www.profootballfocus.com/data/gstats.php?tab=by_week&season="+year+"&gameid="+str(gid)+"&teamid="+str(winner_id)+"&stats="+stat+"&player_id="
+                url2="https://www.profootballfocus.com/data/gstats.php?tab=by_week&season="+year+"&gameid="+str(gid)+"&teamid="+str(loser_id)+"&stats="+stat+"&player_id="
                 urls.append(url1)
                 urls.append(url2)
-                outfiles.append("week-by-week-stat-"+stat+"-gid-"+str(gid)+"-winnerteamid-"+str(winner_id)+".html")
-                outfiles.append("week-by-week-stat-"+stat+"-gid-"+str(gid)+"-loserteamid-"+str(loser_id)+".html")
+                outfiles.append("one-on-one-stat-"+stat+"-gid-"+str(gid)+"-winnerteamid-"+str(winner_id)+".html")
+                outfiles.append("one-on-one-stat-"+stat+"-gid-"+str(gid)+"-loserteamid-"+str(loser_id)+".html")
         start_gid = start_gid + len(matchups[(year, week)])+1
 
-
+urls = ["https://www.profootballfocus.com/data/gstats.php?tab=by_team&season=2015&gameid=3406&teamid=25&stats=v&playerid="]
+#urls = ["https://www.profootballfocus.com/data/by_week.php?tab=by_week&season=2015&wk=1"]
+outfiles = ["test.html"]
 save_data(urls, outfiles, None)
