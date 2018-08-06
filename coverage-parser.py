@@ -7,11 +7,9 @@ import os, sys, urllib
 import sqlite3 as db
 from io import StringIO
 from pathlib import Path
-
-FIREFOX_DIR = Path(os.path.expanduser('~'), '.mozilla', 'firefox')
-OUTPUT = 'cookies.txt'
-CONTENTS = 'host, path, isSecure, expiry, name, value'
-
+from os import listdir, walk
+from os.path import isfile, join
+import _pickle as pickle
 
 class HTMLTableParser(HTMLParser):
     """ This class serves as a html table parser. It is able to parse multiple
@@ -78,94 +76,29 @@ class HTMLTableParser(HTMLParser):
             self._current_table = []
 
 
-def get_summary_by_team(target):
-    cj = CookieJar()
-    cookie_db = get_cookie_db_path(str(FIREFOX_DIR))
-    conn = db.connect(cookie_db)
-    cursor = conn.cursor()
-    sql = "SELECT {c} FROM moz_cookies WHERE host LIKE '%{h}%'".format(c=CONTENTS, h=host)
-    cursor.execute(sql)
-
-    for item in cursor.fetchall():
-        c = Cookie(0, item[4], item[5],
-            None, False,
-            item[0], item[0].startswith('.'), item[0].startswith('.'),
-            item[1], False,
-            item[2],
-            item[3], item[3]=="",
-            None, None, {})
-        cj.set_cookie(c)
-    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
-    response = opener.open(target)
-    xhtml = response.read().decode("utf-8")
-    #req = urllib.request.Request(url=target)
-    #f = urllib.request.urlopen(req)
-    #xhtml = f.read().decode("utf-8")
-    return html_to_pd(xhtml, 2)
-
 def html_to_pd(html, idx):
     p = HTMLTableParser()
     p.feed(html)
     return pd.DataFrame.from_dict(p.tables[idx])
 
 
-def get_cookie_db_path(firefox_dir):
-    for e in os.listdir(firefox_dir):
-        if e.endswith('.default'):
-            p = Path(firefox_dir, e, 'cookies.sqlite')
-            if not p.is_file():
-                print("Error: the file '{0}' doesn't exist".format(str(p)))
-                sys.exit(1)
-            else:
-                return str(p)
-    # else
-    print("Error: the user dir. was not found in '{0}'".format(firefox_dir))
-    sys.exit(1)
-
-def get_cookies_in_cookiejar(host):
-    """Export cookies and put them in a cookiejar.
-    Return value: a cookiejar filled with cookies."""
-    # based on http://www.guyrutenberg.com/2010/11/27/building-cookiejar-out-of-firefoxs-cookies-sqlite/
-    cj = MozillaCookieJar() 
-    cookie_db = get_cookie_db_path(str(FIREFOX_DIR))
-    conn = db.connect(cookie_db)
-    cursor = conn.cursor()
-    sql = "SELECT {c} FROM moz_cookies WHERE host LIKE '%{h}%'".format(c=CONTENTS, h=host)
-    cursor.execute(sql)
-
-    for item in cursor.fetchall():
-        c = Cookie(0, item[4], item[5],
-            None, False,
-            item[0], item[0].startswith('.'), item[0].startswith('.'),
-            item[1], False,
-            item[2],
-            item[3], item[3]=="",
-            None, None, {})
-        #print c
-        cj.set_cookie(c)
-
-    return cj
-
-
-## Using cookies
-#host = "profootballfocus.com"
-#target = "https://www.profootballfocus.com/data/by_team.php"
-#print(get_cookies_in_cookiejar(host))
-#print(get_summary_by_team(target))
-
-##HTTPSBasicAuth -- doesn't work
-#import requests
-#from requests.auth import HTTPBasicAuth
-#content = requests.get("https://www.profootballfocus.com/data/by_team.php", auth=HTTPBasicAuth("JamiePats", "791PEAsGkuNp")).content
-#print (html_to_pd(content.decode("utf-8"), 0))
-
-#FROM FILE
-
-
-
-def get_dict_from_file(url):
-    f = open("one-on-one-season-2016-week-1-stat-v-gid-4108-winnerteamid-25.html", "rb")
-    df = html_to_pd(f.read().decode("utf-8"), 3)
+def get_dict_from_file(fname):
+    f = open(fname, "rb")
+    max_size = 0
+    max_idx = 0
+    try:
+        for i in range(10):
+            pd = html_to_pd(open(fname, "rb").read().decode("utf-8"), i)
+            if pd.shape[0]*pd.shape[1] > max_size:
+                max_size = pd.shape[0]*pd.shape[1]
+                max_idx = i
+    except:
+        pass
+    try:
+        df = html_to_pd(f.read().decode("utf-8"), max_idx)
+    except:
+        print("Skipped file", fname)
+        return {}
     receivers = None
     receivers_overall = None
     defenders = []
@@ -251,3 +184,20 @@ def get_dict_from_file(url):
                 defender_performance[defender][receivers[i]]["PD"] = rec    
         index += 1
     return defender_performance
+
+base_directory = "2012"
+
+season_dict = {}
+
+html_files = [base_directory+"/"+f for f in listdir(base_directory) if isfile(join(base_directory, f))]
+for f in html_files:
+    d = get_dict_from_file(f)
+    splitf = f.split("-")
+    season, week, stat, gid, teamid = splitf[4:13:2]
+    season_dict[(week, gid, teamid)] = d
+
+with open(base_directory+"-weekly-"+stat+"-dict.pkl", "wb") as outfile:
+    pickle.dump(season_dict, outfile)
+outfile.close()
+
+
