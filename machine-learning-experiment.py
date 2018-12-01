@@ -29,7 +29,7 @@ def get_norms(X, cov):
     return np.sqrt(res.reshape((len(res),1)))
 
 def get_S(X, Xtest):
-    cov = np.cov(X.transpose())
+    cov = np.inverse(np.cov(X.transpose()))
     xt_c_x = np.matmul(Xtest, np.matmul(cov, X.transpose()))
     Xnorms = get_norms(X, cov)
     Xtnorms = get_norms(Xtest, cov)
